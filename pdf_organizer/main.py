@@ -22,13 +22,3 @@ def organize(
     """
     # Call the organize_pdfs function from the previous code
     PDFOrganizer.organize_pdfs(input_directory, output_directory, verbose)
-
-
-@app.command()
-def help():
-    """
-    Show this message and exit.
-    """
-    typer.echo("PDF Organizer CLI")
-    typer.echo("-------------------")
-    typer.echo("organize: Organize PDF files in a directory")
