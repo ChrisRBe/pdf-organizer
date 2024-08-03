@@ -11,18 +11,24 @@ import shutil
 
 class PDFOrganizer:
     @classmethod
-    def organize_pdfs(cls, input_directory: str, output_directory: str) -> None:
+    def organize_pdfs(cls, input_directory: str, output_directory: str, verbose: bool = False) -> None:
         """
         Organize PDF files in a directory by creating subdirectories based on the first word of the PDF filename.
 
-        Args:
-            input_directory (str): The path to the directory containing the PDF files.
-            output_directory (str): The path to the directory where the organized PDF files should be moved.
+        :param input_directory: The path to the directory containing the PDF files.
+        :param output_directory: The path to the directory where the organized PDF files should be moved.
+        :type verbose: bool
+        :param verbose: shows verbose output
         """
         # Iterate through all files in the directory
         for filename in os.listdir(input_directory):
+            if verbose:
+                print(f"Processing {filename}...")
             # Check if the file is a PDF
-            if filename.endswith(".pdf"):
+            if filename.lower().endswith(".pdf"):
+                if verbose:
+                    print(f"Organizing {filename}...")
+
                 # Extract the first word from the filename
                 first_word = filename.split('.')[0].split('-')[0].split('_')[0].split(' ')[0]
 
@@ -34,4 +40,10 @@ class PDFOrganizer:
                 # Move the PDF file to the subdirectory
                 src = os.path.join(input_directory, filename)
                 dst = os.path.join(subdirectory, filename)
-                shutil.copy(src, dst)
+                shutil.move(src, dst)
+
+                if verbose:
+                    print(f"Moved {filename} to {subdirectory}")
+
+        if verbose:
+            print("Finished organizing PDF files.")

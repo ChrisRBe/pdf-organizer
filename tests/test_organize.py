@@ -1,7 +1,6 @@
 import os
 import shutil
 import tempfile
-from typing import Union
 
 import pytest
 
