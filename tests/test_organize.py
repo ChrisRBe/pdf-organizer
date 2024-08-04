@@ -71,6 +71,3 @@ class TestPDFOrganizer:
                 print(os.path.join(output_dir, filename, pdf_file))
                 assert os.path.exists(os.path.join(output_dir, filename, pdf_file))
             assert os.path.exists(os.path.join(output_dir, filename))
-
-        # Clean up the temporary directory
-        shutil.rmtree(output_dir)

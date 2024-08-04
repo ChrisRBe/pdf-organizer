@@ -20,7 +20,7 @@ class PDFMetadataManager:
         cursor (sqlite3.Cursor): The cursor object to execute SQL queries.
     """
 
-    def __init__(self, database: str = "pdf_metadata.db"):
+    def __init__(self, database: str = "pdf_metadata.sqlite3"):
         """
         Initializes the PDFMetadataManager object.
 

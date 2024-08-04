@@ -61,6 +61,7 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+*.sqlite3
 
 # Flask stuff:
 instance/
@@ -162,3 +163,4 @@ cython_debug/
 
 # we don't want to include any pdf files for example
 *.pdf
+pdf_metadata.sqlite3
