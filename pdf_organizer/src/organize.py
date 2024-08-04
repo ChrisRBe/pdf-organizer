@@ -30,7 +30,7 @@ class PDFOrganizer:
                     print(f"Organizing {filename}...")
 
                 # Extract the first word from the filename
-                first_word = filename.split('.')[0].split('-')[0].split('_')[0].split(' ')[0]
+                first_word = filename.split(".")[0].split("-")[0].split("_")[0].split(" ")[0]
 
                 # Create the subdirectory if it doesn't exist
                 subdirectory = os.path.join(output_directory, first_word)

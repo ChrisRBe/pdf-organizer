@@ -41,7 +41,7 @@ class TestPDFOrganizer:
             with open(os.path.join(temp_dir, filename), "w") as f:
                 f.write("Test PDF file")
 
-            first_word = filename.split('.')[0].split('-')[0].split('_')[0].split(' ')[0]
+            first_word = filename.split(".")[0].split("-")[0].split("_")[0].split(" ")[0]
 
             if first_word in pdfs:
                 pdfs[first_word].append(filename)
@@ -59,7 +59,7 @@ class TestPDFOrganizer:
             pdf_files (dict[str, list[str]]): A fixture that creates sample PDF files in the temporary directory.
         """
         output_dir = os.path.join(temp_dir, "output")
-        PDFOrganizer.organize_pdfs(temp_dir, output_dir)
+        PDFOrganizer.organize_pdfs(temp_dir, output_dir, verbose=True)
 
         # Check that the output directory exists
         assert os.path.exists(output_dir)
