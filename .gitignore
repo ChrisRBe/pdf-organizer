@@ -164,3 +164,4 @@ cython_debug/
 # we don't want to include any pdf files for example
 *.pdf
 pdf_metadata.sqlite3
+!/pdf-organizer-frontend/src/lib/
