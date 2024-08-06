@@ -1,16 +1,51 @@
 // app/page.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
 import { PdfMetadata } from '@/types';
-import { openDB } from '@/lib/db';
 
-async function getPdfMetadata() {
-  const db = await openDB();
-  const rows = await db.all<PdfMetadata[]>('SELECT * FROM pdf_metadata');
-  await db.close();
-  return rows;
-}
+export default function Home() {
+  const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);
+  const [sortColumn, setSortColumn] = useState('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-export default async function Home() {
-  const pdfMetadata = await getPdfMetadata();
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/pdf-metadata');
+      const data = await response.json();
+      setPdfMetadata(data);
+    } catch (error) {
+      console.error('Error fetching PDF metadata:', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSort = (column: string) => {
+    if (column === sortColumn) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortOrder('asc');
+    }
+  };
+
+  const sortedMetadata = [...pdfMetadata].sort((a, b) => {
+    const valueA = a[sortColumn as keyof PdfMetadata];
+    const valueB = b[sortColumn as keyof PdfMetadata];
+
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      return sortOrder === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+    }
+
+    if (typeof valueA === 'number' && typeof valueB === 'number') {
+      return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+    }
+
+    return 0;
+  });
 
   return (
     <div>
@@ -18,20 +53,20 @@ export default async function Home() {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Creator</th>
-            <th>Producer</th>
-            <th>Created</th>
-            <th>Modified</th>
-            <th>Filename</th>
-            <th>Filesize</th>
-            <th>Has Metadata</th>
-            <th>Has File Problems</th>
+            <th onClick={() => handleSort('title')}>Title</th>
+            <th onClick={() => handleSort('author')}>Author</th>
+            <th onClick={() => handleSort('creator')}>Creator</th>
+            <th onClick={() => handleSort('producer')}>Producer</th>
+            <th onClick={() => handleSort('created')}>Created</th>
+            <th onClick={() => handleSort('modified')}>Modified</th>
+            <th onClick={() => handleSort('filename')}>Filename</th>
+            <th onClick={() => handleSort('filesize')}>Filesize</th>
+            <th onClick={() => handleSort('has_metadata')}>Has Metadata</th>
+            <th onClick={() => handleSort('has_file_problems')}>Has File Problems</th>
           </tr>
         </thead>
         <tbody>
-          {pdfMetadata.map((metadata) => (
+          {sortedMetadata.map((metadata) => (
             <tr key={metadata.id}>
               <td>{metadata.title}</td>
               <td>{metadata.author}</td>
