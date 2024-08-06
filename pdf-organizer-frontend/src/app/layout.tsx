@@ -7,7 +7,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>PDF Metadata Manager</title>
       </head>
-      <body>{children}</body>
+      <body className='bg-stone-50'>{children}</body>
     </html>
   );
 }
