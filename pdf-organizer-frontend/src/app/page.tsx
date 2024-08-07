@@ -50,19 +50,19 @@ export default function Home() {
   return (
     <div>
       <h1>PDF Metadata Manager</h1>
-      <table>
+      <table className='table-auto'>
         <thead>
           <tr>
-            <th onClick={() => handleSort('title')}>Title</th>
-            <th onClick={() => handleSort('author')}>Author</th>
-            <th onClick={() => handleSort('creator')}>Creator</th>
-            <th onClick={() => handleSort('producer')}>Producer</th>
-            <th onClick={() => handleSort('created')}>Created</th>
-            <th onClick={() => handleSort('modified')}>Modified</th>
-            <th onClick={() => handleSort('filename')}>Filename</th>
-            <th onClick={() => handleSort('filesize')}>Filesize</th>
-            <th onClick={() => handleSort('has_metadata')}>Has Metadata</th>
-            <th onClick={() => handleSort('has_file_problems')}>Has File Problems</th>
+            <th className='cursor-pointer' onClick={() => handleSort('title')}>Title</th>
+            <th className='cursor-pointer' onClick={() => handleSort('author')}>Author</th>
+            <th className='cursor-pointer' onClick={() => handleSort('creator')}>Creator</th>
+            <th className='cursor-pointer' onClick={() => handleSort('producer')}>Producer</th>
+            <th className='cursor-pointer' onClick={() => handleSort('created')}>Created</th>
+            <th className='cursor-pointer' onClick={() => handleSort('modified')}>Modified</th>
+            <th className='cursor-pointer' onClick={() => handleSort('filename')}>Filename</th>
+            <th className='cursor-pointer' onClick={() => handleSort('filesize')}>Filesize</th>
+            <th className='cursor-pointer' onClick={() => handleSort('has_metadata')}>Has Metadata</th>
+            <th className='cursor-pointer' onClick={() => handleSort('has_file_problems')}>Has File Problems</th>
           </tr>
         </thead>
         <tbody>
