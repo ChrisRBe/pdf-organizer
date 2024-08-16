@@ -1,8 +1,8 @@
 // app/page.tsx
-'use client';
+"use client"
 
 import { useState, useEffect } from 'react';
-import { PdfMetadata } from '@/types';
+import { PdfMetadata } from '@/types/PDFMetaData';
 
 export default function Home() {
   const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);

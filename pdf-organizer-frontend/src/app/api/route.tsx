@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { openDB } from '@/lib/db';
-import { PdfMetadata } from '@/types';
+import { PdfMetadata } from '@/types/PDFMetaData';
 
 export async function GET() {
   try {
