@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { PdfMetadata } from '@/types/PDFMetaData';
+import { PdfMetadata } from '@/types/types';
 
 export default function Home() {
   const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);
