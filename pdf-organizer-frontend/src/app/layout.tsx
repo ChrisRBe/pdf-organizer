@@ -1,4 +1,5 @@
 // app/layout.tsx
+import Header from '../components/Header'
 import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +8,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>PDF Metadata Manager</title>
       </head>
-      <body className='container mx-auto w-11/12 bg-stone-400'>{children}</body>
+      <body className='container mx-auto w-11/12 bg-gray-400'>
+        <Header />        
+        {children}</body>
     </html>
   );
 }

@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { PdfMetadata } from '@/types/types';
+import DataHeader from '../components/DataHeader';
 
 export default function Home() {
   const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);
@@ -47,27 +48,53 @@ export default function Home() {
     return 0;
   });
 
-  return (
+  function handleTest(params:string) {
+    console.log(params);
+    
+  }
+
+   return (
     <div>
-      <h1>PDF Metadata Manager</h1>
+      <DataHeader handleTest={handleSort}/>
       <table className='table-auto'>
-        <thead>
-          <tr>
-            <th className='cursor-pointer' onClick={() => handleSort('title')}>Title</th>
-            <th className='cursor-pointer' onClick={() => handleSort('author')}>Author</th>
-            <th className='cursor-pointer' onClick={() => handleSort('creator')}>Creator</th>
-            <th className='cursor-pointer' onClick={() => handleSort('producer')}>Producer</th>
-            <th className='cursor-pointer' onClick={() => handleSort('created')}>Created</th>
-            <th className='cursor-pointer' onClick={() => handleSort('modified')}>Modified</th>
-            <th className='cursor-pointer' onClick={() => handleSort('filename')}>Filename</th>
-            <th className='cursor-pointer' onClick={() => handleSort('filesize')}>Filesize</th>
-            <th className='cursor-pointer' onClick={() => handleSort('has_metadata')}>Has Metadata</th>
-            <th className='cursor-pointer' onClick={() => handleSort('has_file_problems')}>Has File Problems</th>
-          </tr>
+                 <thead>
+            <tr>
+                <th className="cursor-pointer" onClick={() => handleSort("title")}>
+                    Title
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("author")}>
+                    Author
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("creator")}>
+                    Creator
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("producer")}>
+                    Producer
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("created")}>
+                    Created
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("modified")}>
+                    Modified
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("filename")}>
+                    Filename
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("filesize")}>
+                    Filesize
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("has_metadata")}>
+                    Has Metadata
+                </th>
+                <th className="cursor-pointer" onClick={() => handleSort("has_file_problems")}>
+                    Has File Problems
+                </th>
+            </tr>
         </thead>
-        <tbody>
+
+         <tbody>
           {sortedMetadata.map((metadata) => (
-            <tr key={metadata.id}>
+            <tr key={metadata.id} className='bg-slate-500'>
               <td>{metadata.title}</td>
               <td>{metadata.author}</td>
               <td>{metadata.creator}</td>
