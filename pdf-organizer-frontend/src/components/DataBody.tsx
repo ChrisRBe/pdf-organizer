@@ -6,25 +6,22 @@ import { PdfMetadata } from "@/types/types";
 
 export default function DataBody() {
     const [pdfData, setPdfData] = useState([]);
-    const [isVisible, setIsVisible] = useState(false);
+    const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
 
     // Runs first time on page load and then every time the pdfData state changes
     useEffect(() => {
         useFetch().then((data) => setPdfData(data));
-    }, [pdfData]);
+    }, []);
 
-    function handleVisible() {
-        setIsVisible((prev) => !prev)
-    }
-
-    // TODO: Add Striping
+    function handleVisibility(id: number) {
+        setVisibility((prev) => ({ ...prev, [id]: !prev[id] ?? false }));
+    }    
+    
+    // TODO: Add Stripingexport default function DataBody() {
     return (
         <>
-            <div className="p-2 bg-indigo-400 cursor-pointer" onClick={handleVisible}>first</div>
-            <div className={`p-2 bg-stone-500 ${isVisible ? "" : "hidden"}`}>second</div>
-            {/* {pdfData.map((data: PdfMetadata) => (
-                <>
-                    <div key={data.id} className="flex bg-indigo-400">
+            {pdfData.map((data: PdfMetadata) => (
+                    <div key={data.id} className="basis-full bg-indigo-400" onClick={() => handleVisibility(data.id)}>
                         <div className="bg-slate-500 grid grid-cols-9 gap-x-4 py-2 px-4">
                             <div>{data.title}</div>
                             <div>{data.author}</div>
@@ -37,10 +34,9 @@ export default function DataBody() {
                             <div>{data.has_metadata ? "Yes" : "No"}</div>
                             <div>{data.has_file_problems ? "Yes" : "No"}</div>
                         </div>
-                        <div className="flex bg-stone-300">Additional Information</div>
+                        <div className={`bg-stone-30 ${visibility[data.id] ? "" : "hidden"}`}>Additional Information</div>
                     </div>
-                </>
-            ))} */}
+            ))}
         </>
     );
 }
