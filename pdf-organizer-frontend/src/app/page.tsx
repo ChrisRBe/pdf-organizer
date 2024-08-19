@@ -1,114 +1,51 @@
 // app/page.tsx
-"use client"
-
-import { useState, useEffect } from 'react';
-import { PdfMetadata } from '@/types/types';
-import DataHeader from '../components/DataHeader';
+import DisplayData from '@/components/DisplayData';
 
 export default function Home() {
-  const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);
-  const [sortColumn, setSortColumn] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
-  async function fetchData() {
-    try {
-      const response = await fetch('/api/pdf-metadata');
-      const data = await response.json();
-      setPdfMetadata(data);
-    } catch (error) {
-      console.error('Error fetching PDF metadata:', error);
-    }
+    return (
+      <DisplayData />
+    )
   }
+  // const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata[]>([]);
+  // const [sortColumn, setSortColumn] = useState('');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
-  const handleSort = (column: string) => {
-    if (column === sortColumn) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortColumn(column);
-      setSortOrder('asc');
-    }
-  };
+  // async function fetchData() {
+  //   try {
+  //     const response = await fetch('/api/pdf-metadata');
+  //     const data = await response.json();
+  //     setPdfMetadata(data);
+  //   } catch (error) {
+  //     console.error('Error fetching PDF metadata:', error);
+  //   }
+  // }
 
-  const sortedMetadata = [...pdfMetadata].sort((a, b) => {
-    const valueA = a[sortColumn as keyof PdfMetadata];
-    const valueB = b[sortColumn as keyof PdfMetadata];
+  // ** Done **
+  // useEffect(() => {
+  //   useFetch().then(data => setPdfMetadata(data));
+  // }, [pdfMetadata]);
 
-    if (typeof valueA === 'string' && typeof valueB === 'string') {
-      return sortOrder === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-    }
+  // const handleSort = (column: string) => {
+  //   if (column === sortColumn) {
+  //     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  //   } else {
+  //     setSortColumn(column);
+  //     setSortOrder('asc');
+  //   }
+  // };
 
-    if (typeof valueA === 'number' && typeof valueB === 'number') {
-      return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
-    }
+  // const sortedMetadata = [...pdfMetadata].sort((a, b) => {
+  //   const valueA = a[sortColumn as keyof PdfMetadata];
+  //   const valueB = b[sortColumn as keyof PdfMetadata];
 
-    return 0;
-  });
+  //   if (typeof valueA === 'string' && typeof valueB === 'string') {
+  //     return sortOrder === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+  //   }
 
-  function handleTest(params:string) {
-    console.log(params);
-    
-  }
+  //   if (typeof valueA === 'number' && typeof valueB === 'number') {
+  //     return sortOrder === 'asc' ? valueA - valueB : valueB - valueA;
+  //   }
 
-   return (
-    <div>
-      <DataHeader handleTest={handleSort}/>
-      <table className='table-auto'>
-                 <thead>
-            <tr>
-                <th className="cursor-pointer" onClick={() => handleSort("title")}>
-                    Title
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("author")}>
-                    Author
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("creator")}>
-                    Creator
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("producer")}>
-                    Producer
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("created")}>
-                    Created
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("modified")}>
-                    Modified
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("filename")}>
-                    Filename
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("filesize")}>
-                    Filesize
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("has_metadata")}>
-                    Has Metadata
-                </th>
-                <th className="cursor-pointer" onClick={() => handleSort("has_file_problems")}>
-                    Has File Problems
-                </th>
-            </tr>
-        </thead>
-
-         <tbody>
-          {sortedMetadata.map((metadata) => (
-            <tr key={metadata.id} className='bg-slate-500'>
-              <td>{metadata.title}</td>
-              <td>{metadata.author}</td>
-              <td>{metadata.creator}</td>
-              <td>{metadata.producer}</td>
-              <td>{metadata.created}</td>
-              <td>{metadata.modified}</td>
-              <td>{metadata.filename}</td>
-              <td>{metadata.filesize}</td>
-              <td>{metadata.has_metadata ? 'Yes' : 'No'}</td>
-              <td>{metadata.has_file_problems ? 'Yes' : 'No'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+  //   return 0;
+  // });
