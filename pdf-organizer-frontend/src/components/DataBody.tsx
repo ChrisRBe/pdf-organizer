@@ -35,7 +35,7 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
         <>
             {sortedData.map((data: PdfMetadata, index: number) => (
                 <div key={data.id} className="basis-full" onClick={() => handleVisibility(data.id)}>
-                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} flex  py-2 px-4`}>
+                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} flex  py-2 px-4 cursor-pointer`}>
                         <div className="basis-6/12 justify-items-center">{data.title}</div>
                         <div className="basis-1/12 justify-items-center">{data.author}</div>
                         <div className="basis-1/12 justify-items-center">{data.created}</div>
