@@ -8,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <title>PDF Metadata Manager</title>
       </head>
-      <body className='container mx-auto w-11/12 bg-gray-400'>
+      <body className='container mx-auto w-11/12 bg-zinc-300'>
         <Header />        
         {children}</body>
     </html>

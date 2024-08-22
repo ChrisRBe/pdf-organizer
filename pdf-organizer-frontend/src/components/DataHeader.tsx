@@ -10,13 +10,13 @@ export default function DataHeader({ sortData, setSortData }: { sortData: SortOr
     }
 
     return (<>
-        <div className="flex gap-2">
-            <div className="basis-6/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "title"})}>Title</div>
-            <div className="basis-1/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "author"})}>Author</div>
-            <div className="basis-1/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "created"})}>Created</div>
-            <div className="basis-1/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "filesize"})}>Filesize</div>
-            <div className="basis-1/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "has_metadata"})}>Metadata</div>
-            <div className="basis-1/12 justify-items-center cursor-pointer" onClick={() => handleClick({col: "has_file_problems"})}>File Problems</div>
+        <div className="flex py-4 bg-zinc-800 text-zinc-200 rounded-t-lg">
+            <div className="basis-6/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "title"})}>Title</div>
+            <div className="basis-1/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "author"})}>Author</div>
+            <div className="basis-1/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "created"})}>Created</div>
+            <div className="basis-1/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "filesize"})}>Filesize</div>
+            <div className="basis-1/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "has_metadata"})}>Metadata</div>
+            <div className="basis-1/12 px-4 font-bold text-1xl cursor-pointer" onClick={() => handleClick({col: "has_file_problems"})}>Problems</div>
         </div>
     </>
     );

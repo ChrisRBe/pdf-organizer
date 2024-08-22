@@ -33,28 +33,24 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
 
     return (
         <>
-            {sortedData.map((data: PdfMetadata) => (
-                <div key={data.id} className="basis-full bg-indigo-400" onClick={() => handleVisibility(data.id)}>
-                    <div className="bg-slate-500 flex  py-2 px-4">
-                        <div className="basis-6/12 justify-items-center">Title: {data.title}</div>
-                        <div className="basis-1/12 justify-items-center">Author: {data.author}</div>
-                        <div className="basis-1/12 justify-items-center">created: {data.created}</div>
-                        <div className="basis-1/12 justify-items-center">size: {data.filesize}</div>
-                        <div className="basis-1/12 justify-items-center">
-                            metadata: {data.has_metadata ? "Yes" : "No"}
-                        </div>
-                        <div className="basis-1/12 justify-items-center">
-                            problems: {data.has_file_problems ? "Yes" : "No"}
-                        </div>
+            {sortedData.map((data: PdfMetadata, index: number) => (
+                <div key={data.id} className="basis-full" onClick={() => handleVisibility(data.id)}>
+                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} flex  py-2 px-4`}>
+                        <div className="basis-6/12 justify-items-center">{data.title}</div>
+                        <div className="basis-1/12 justify-items-center">{data.author}</div>
+                        <div className="basis-1/12 justify-items-center">{data.created}</div>
+                        <div className="basis-1/12 justify-items-center"> {data.filesize}</div>
+                        <div className="basis-1/12 justify-items-center">{data.has_metadata ? "Yes" : "No"}</div>
+                        <div className="basis-1/12 justify-items-center">{data.has_file_problems ? "Yes" : "No"}</div>
                     </div>
-                    <div className={`bg-stone-30 ${visibility[data.id] ? "" : "hidden"}`}>
+                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} ${visibility[data.id] ? "" : "hidden"}`}>
                         <div className="flex py-2 px-4 ">
-                            <div className="basis6-12 justify-items-center">filename: {data.filename}</div>
-                            <div className="basis6-12 justify-items-center">creator: {data.creator}</div>
+                            <div className="basis6-12 justify-items-center">{data.filename}</div>
+                            <div className="basis6-12 justify-items-center">{data.creator}</div>
                         </div>
                         <div className="flex py-2 px-4 ">
-                            <div className="basis6-12 justify-items-center">producer: {data.producer}</div>
-                            <div className="basis6-12 justify-items-center">last modified: {data.modified}</div>
+                            <div className="basis6-12 justify-items-center">{data.producer}</div>
+                            <div className="basis6-12 justify-items-center">{data.modified}</div>
                         </div>
                     </div>
                 </div>
