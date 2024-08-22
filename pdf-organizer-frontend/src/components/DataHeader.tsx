@@ -21,37 +21,37 @@ export default function DataHeader({
                     className="basis-6/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "title" })}
                 >
-                    {sortData.col === 'title' ? (sortData.order === 'asc' ? 'Title ▲' : 'Title ▼') : 'Title'}
+                    {sortData.col === 'title' ? (sortData.order === 'asc' ? 'Title ▼' : 'Title ▲') : 'Title'}
                 </div>
                 <div
                     className="basis-1/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "author" })}
                 >
-                    {sortData.col === 'author' ? (sortData.order === 'asc' ? 'Author ▲' : 'Author ▼') : 'Author'}
+                    {sortData.col === 'author' ? (sortData.order === 'asc' ? 'Author ▼' : 'Author ▲') : 'Author'}
                 </div>
                 <div
                     className="basis-1/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "created" })}
                     >
-                    {sortData.col === 'created' ? (sortData.order === 'asc' ? 'Created ▲' : 'Created ▼') : 'Created'}
+                    {sortData.col === 'created' ? (sortData.order === 'asc' ? 'Created ▼' : 'Created ▲') : 'Created'}
                 </div>
                 <div
                     className="basis-1/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "filesize" })}
                     >
-                    {sortData.col === 'filesize' ? (sortData.order === 'asc' ? 'Size ▲' : 'Size ▼') : 'Size'}
+                    {sortData.col === 'filesize' ? (sortData.order === 'asc' ? 'Size ▼' : 'Size ▲') : 'Size'}
                 </div>
                 <div
                     className="basis-1/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "has_metadata" })}
                     >
-                    {sortData.col === 'has_metadata' ? (sortData.order === 'asc' ? 'MetaData ▲' : 'MetaData ▼') : 'MetaData'}
+                    {sortData.col === 'has_metadata' ? (sortData.order === 'asc' ? 'MetaData ▼' : 'MetaData ▲') : 'MetaData'}
                 </div>
                 <div
                     className="basis-1/12 px-4 font-bold text-1xl cursor-pointer"
                     onClick={() => handleClick({ col: "has_file_problems" })}
                     >
-                    {sortData.col === 'has_file_problems' ? (sortData.order === 'asc' ? 'Error ▲' : 'Error ▼') : 'Error'}
+                    {sortData.col === 'has_file_problems' ? (sortData.order === 'asc' ? 'Error ▼' : 'Error ▲') : 'Error'}
                 </div>
             </div>
         </>
