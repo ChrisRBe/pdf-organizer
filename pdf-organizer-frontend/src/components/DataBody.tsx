@@ -33,9 +33,9 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
 
     return (
         <>
-            {sortedData.map((data: PdfMetadata, index: number) => (
-                <div key={data.id} className="basis-full" onClick={() => handleVisibility(data.id)}>
-                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} flex  py-2 px-4 cursor-pointer`}>
+            {sortedData.map((data: PdfMetadata) => (
+                <div key={data.id} className={`basis-full ${data.has_file_problems === 1 ? "error" : "even:bg-stone-200 odd:bg-stone-500"}`} onClick={() => handleVisibility(data.id)}>
+                    <div className="flex py-2 px-4 cursor-pointer">
                         <div className="basis-6/12 justify-items-center">{data.title}</div>
                         <div className="basis-1/12 justify-items-center">{data.author}</div>
                         <div className="basis-1/12 justify-items-center">{data.created}</div>
@@ -43,7 +43,7 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                         <div className="basis-1/12 justify-items-center">{data.has_metadata ? "Yes" : "No"}</div>
                         <div className="basis-1/12 justify-items-center">{data.has_file_problems ? "Yes" : "No"}</div>
                     </div>
-                    <div className={`${index % 2 === 0 ? "bg-stone-200" : "bg-stone-500"} ${visibility[data.id] ? "" : "hidden"}`}>
+                    <div className={`${visibility[data.id] ? "" : "hidden"}`}>
                         <div className="flex py-2 px-4 ">
                             <div className="basis6-12 justify-items-center">{data.filename}</div>
                             <div className="basis6-12 justify-items-center">{data.creator}</div>
