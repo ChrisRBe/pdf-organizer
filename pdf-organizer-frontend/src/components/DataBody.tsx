@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useFetch } from "./useFetch";
 import { PdfMetadata, SortOrder } from "@/types/types";
 
 export default function DataBody({ sortData }: { sortData: SortOrder }) {
-    const [pdfData, setPdfData] = useState([]);
+    const [pdfData, setPdfData] = useState<PdfMetadata[]>([]);
     const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
+    const duplicatIDRef = useRef<number[]>([]);
 
     useEffect(() => {
         useFetch().then((data) => setPdfData(data));
@@ -31,13 +32,37 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
         setVisibility((prev) => ({ ...prev, [id]: !prev[id] ?? false }));
     }
 
+    (function filterDuplicateIDs() {
+        const fileSizeMap = new Map<number, number[]>();
+        const duplicatedIDs = new Set<number[]>();
+
+        pdfData.forEach((item) => {
+            if (!fileSizeMap.has(item.filesize)) {
+                fileSizeMap.set(item.filesize, []);
+            }
+            fileSizeMap.get(item.filesize)?.push(item.id);
+        });
+
+        fileSizeMap.forEach((item) => {
+            if (item.length > 1) {
+                duplicatedIDs.add(item);
+            }
+        });
+        duplicatIDRef.current = Array.from(duplicatedIDs).flat();
+        console.log(duplicatIDRef.current);
+    })();
+
     return (
         <>
             {sortedData.map((data: PdfMetadata) => (
                 <div
                     key={data.id}
                     className={`basis-full flex-row my-1 ${
-                        data.has_file_problems === 1 ? "error" : "even:bg-zinc-300 odd:bg-zinc-400"
+                        data.has_file_problems === 1
+                            ? "error"
+                            : duplicatIDRef.current.includes(data.id)
+                            ? "warning"
+                            : "even:bg-zinc-300 odd:bg-zinc-400"
                     }`}
                     onClick={() => handleVisibility(data.id)}
                 >

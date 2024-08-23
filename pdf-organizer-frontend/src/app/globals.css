@@ -6,4 +6,8 @@
     .error {
         background: #a70606;
     }
+
+    .warning {
+        background: #f0e028;
+    }
 }
