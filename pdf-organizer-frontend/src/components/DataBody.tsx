@@ -34,7 +34,13 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
     return (
         <>
             {sortedData.map((data: PdfMetadata) => (
-                <div key={data.id} className={`basis-full flex-row my-1 ${data.has_file_problems === 1 ? "error" : "even:bg-zinc-300 odd:bg-zinc-400"}`} onClick={() => handleVisibility(data.id)}>
+                <div
+                    key={data.id}
+                    className={`basis-full flex-row my-1 ${
+                        data.has_file_problems === 1 ? "error" : "even:bg-zinc-300 odd:bg-zinc-400"
+                    }`}
+                    onClick={() => handleVisibility(data.id)}
+                >
                     <div className="flex py-1 px-2 cursor-pointer">
                         <div className="basis-6/12 truncate">{data.title}</div>
                         <div className="basis-6/12 truncate">{data.filename}</div>
@@ -46,9 +52,18 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                     </div>
                     <div className={`${visibility[data.id] ? "" : "hidden"}`}>
                         <div className="py-1 px-2 text-lg">
-                            <div className="basis6-12"><b>Creator: </b>{data.creator}</div>
-                            <div className="basis6-12"><b>Producer: </b>{data.producer}</div>
-                            <div className="basis6-12"><b>Last Modified: </b>{data.modified}</div>
+                            <div className="basis6-12">
+                                <b>Creator: </b>
+                                {data.creator}
+                            </div>
+                            <div className="basis6-12">
+                                <b>Producer: </b>
+                                {data.producer}
+                            </div>
+                            <div className="basis6-12">
+                                <b>Last Modified: </b>
+                                {data.modified}
+                            </div>
                         </div>
                     </div>
                 </div>
