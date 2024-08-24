@@ -1,5 +1,5 @@
 // types.ts
-export interface PdfMetadata {
+interface PdfMetadata {
   id: number;
   title: string;
   author: string;
@@ -12,3 +12,10 @@ export interface PdfMetadata {
   has_metadata: number;
   has_file_problems: number;
 }
+
+interface SortOrder {
+  col: string;
+  order?: "asc" | "desc";
+}
+
+export type { PdfMetadata, SortOrder }
