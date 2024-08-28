@@ -39,9 +39,11 @@ class PDFMetadataManager:
                 created TEXT,
                 modified TEXT,
                 filename TEXT,
+                filepath TEXT,
                 filesize INTEGER,
                 has_metadata INTEGER DEFAULT 0,
-                has_file_problems INTEGER DEFAULT 0
+                has_file_problems INTEGER DEFAULT 0,
+                to_delete INTEGER DEFAULT 0
             )
         """)
 
@@ -123,8 +125,8 @@ class PDFMetadataManager:
         """
         self.cursor.execute(
             """
-            INSERT INTO pdf_metadata (title, author, creator, producer, created, modified, filename, filesize, has_metadata, has_file_problems)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO pdf_metadata (title, author, creator, producer, created, modified, filename, filepath, filesize, has_metadata, has_file_problems)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
             (
                 metadata["title"] or "",
@@ -134,6 +136,7 @@ class PDFMetadataManager:
                 metadata["created"] or "",
                 metadata["modified"] or "",
                 filename,
+                os.path.abspath(filename),
                 filesize,
                 metadata["has_metadata"],
                 metadata["has_file_problems"],

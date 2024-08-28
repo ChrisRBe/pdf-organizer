@@ -27,7 +27,7 @@ directory = "coverage_html_report"
 
 [tool.poetry]
 name = "pdf-organizer"
-version = "0.8.0"
+version = "0.9.0"
 description = ""
 authors = ["ChrisRBe <chrisrbe@outlook.com>"]
 readme = "README.md"
