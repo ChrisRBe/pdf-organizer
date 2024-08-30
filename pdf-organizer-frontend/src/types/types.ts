@@ -8,9 +8,11 @@ interface PdfMetadata {
   created: string;
   modified: string;
   filename: string;
+  filepath: string;
   filesize: number;
   has_metadata: number;
   has_file_problems: number;
+  to_delete: number;
 }
 
 interface SortOrder {
