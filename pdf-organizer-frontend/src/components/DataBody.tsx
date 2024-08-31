@@ -3,18 +3,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useFetch } from "./useFetch";
 import { PdfMetadata, SortOrder } from "@/types/types";
-import { eventNames } from "process";
+import Button from "./Button";
 
 export default function DataBody({ sortData }: { sortData: SortOrder }) {
     const [pdfData, setPdfData] = useState<PdfMetadata[]>([]);
     const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
-    const [buttonPressed, setButtonPressed] = useState<Set<number>>(new Set());
     const duplicatIDRef = useRef<number[]>([]);
 
     useEffect(() => {
         useFetch().then((data: PdfMetadata[]) => {
             setPdfData(data);
-            // setButtonPressed(new Set(data.map((item) => (item.to_delete === 1 ? item.id : 0))));
         });
     }, []);
 
@@ -35,32 +33,6 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
 
     function handleVisibility(id: number) {
         setVisibility((prev) => ({ ...prev, [id]: !prev[id] ?? false }));
-    }
-
-    function handleToDelete(
-        e: React.MouseEvent<HTMLButtonElement>,
-        { id, to_delete }: { id: number; to_delete: number }
-    ) {
-        e.stopPropagation();
-
-        fetch("/api", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ id, to_delete }),
-        });
-
-        setButtonPressed((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(id)) {
-                newSet.delete(id);
-            } else {
-                newSet.add(id);
-            }
-            return newSet;
-        });
-        console.log("Button pressed:", buttonPressed);
     }
 
     function formatBytes(bytes: number, decimals = 2): string {
@@ -123,23 +95,8 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                         <div className="basis-5 truncate content-center text-center">
                             {data.has_file_problems ? "Yes" : "No"}
                         </div>
-                        <div className="basis-10 justify-center">
-                            {data.to_delete === 0 && (
-                                <button
-                                    className={"bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                                    onClick={(e) => handleToDelete(e, { id: data.id, to_delete: 1 })}
-                                >
-                                    to Delete
-                                </button>
-                            )}
-                            {data.to_delete === 1 && (
-                                <button
-                                    className={"bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"}
-                                    onClick={(e) => handleToDelete(e, { id: data.id, to_delete: 0 })}
-                                >
-                                    Undo
-                                </button>
-                            )}
+                        <div className="basis-10 justify-center ">
+                            <Button id={data.id} to_delete={data.to_delete} />
                         </div>
                     </div>
                     <div className={`${visibility[data.id] ? "" : "hidden"}`}>
@@ -155,10 +112,6 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                             <div className="basis6-12">
                                 <b>Last Modified: </b>
                                 {data.modified}
-                            </div>
-                            <div className="basis6-12">
-                                <b>to Delete: </b>
-                                {data.to_delete}
                             </div>
                         </div>
                     </div>
