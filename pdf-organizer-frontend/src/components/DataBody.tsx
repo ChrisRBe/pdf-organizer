@@ -95,7 +95,7 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                         <div className="basis-5 truncate content-center text-center">
                             {data.has_file_problems ? "Yes" : "No"}
                         </div>
-                        <div className="basis-10 justify-center ">
+                        <div className="basis-10 flex justify-center ">
                             <Button id={data.id} to_delete={data.to_delete} />
                         </div>
                     </div>
