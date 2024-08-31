@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useFetch } from "./useFetch";
 import { PdfMetadata, SortOrder } from "@/types/types";
+import Button from "./Button";
 
 export default function DataBody({ sortData }: { sortData: SortOrder }) {
     const [pdfData, setPdfData] = useState<PdfMetadata[]>([]);
@@ -10,7 +11,9 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
     const duplicatIDRef = useRef<number[]>([]);
 
     useEffect(() => {
-        useFetch().then((data) => setPdfData(data));
+        useFetch().then((data: PdfMetadata[]) => {
+            setPdfData(data);
+        });
     }, []);
 
     const sortedData = [...pdfData].sort((a: PdfMetadata, b: PdfMetadata) => {
@@ -33,11 +36,11 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
     }
 
     function formatBytes(bytes: number, decimals = 2): string {
-        if (bytes === 0) return '0 Bytes';
+        if (bytes === 0) return "0 Bytes";
 
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
 
         const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -61,7 +64,6 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
             }
         });
         duplicatIDRef.current = Array.from(duplicatedIDs).flat();
-        console.log(duplicatIDRef.current);
     })();
 
     return (
@@ -78,14 +80,24 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
                     }`}
                     onClick={() => handleVisibility(data.id)}
                 >
-                    <div className="flex py-1 px-2 cursor-pointer">
-                        <div className="basis-6/12 truncate">{data.title}</div>
-                        <div className="basis-6/12 truncate">{data.filename}</div>
-                        <div className="basis-3/12 truncate">{data.author}</div>
-                        <div className="basis-3/12 truncate">{data.created}</div>
-                        <div className="basis-2/12 truncate"> {data.filesize && formatBytes(data.filesize)}</div>
-                        <div className="basis-1/12 truncate">{data.has_metadata ? "Yes" : "No"}</div>
-                        <div className="basis-1/12 truncate">{data.has_file_problems ? "Yes" : "No"}</div>
+                    <div className="flex gap-x-2 py-1 px-2 cursor-pointer">
+                        <div className="basis-25 truncate content-center">{data.title}</div>
+                        <div className="basis-20 truncate content-center">{data.filename}</div>
+                        <div className="basis-15 truncate content-center">{data.author}</div>
+                        <div className="basis-15 truncate content-center text-center">{data.created}</div>
+                        <div className="basis-7 truncate content-center text-center">
+                            {" "}
+                            {data.filesize && formatBytes(data.filesize)}
+                        </div>
+                        <div className="basis-5 truncate content-center text-center">
+                            {data.has_metadata ? "Yes" : "No"}
+                        </div>
+                        <div className="basis-5 truncate content-center text-center">
+                            {data.has_file_problems ? "Yes" : "No"}
+                        </div>
+                        <div className="basis-10 flex justify-center ">
+                            <Button id={data.id} to_delete={data.to_delete} />
+                        </div>
                     </div>
                     <div className={`${visibility[data.id] ? "" : "hidden"}`}>
                         <div className="py-1 px-2 text-lg">
