@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFetch } from "./useFetch";
 import { PdfMetadata, SortOrder } from "@/types/types";
 import Button from "./Button";
@@ -9,6 +10,7 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
     const [pdfData, setPdfData] = useState<PdfMetadata[]>([]);
     const [visibility, setVisibility] = useState<{ [key: number]: boolean }>({});
     const duplicatIDRef = useRef<number[]>([]);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         useFetch().then((data: PdfMetadata[]) => {
@@ -68,55 +70,61 @@ export default function DataBody({ sortData }: { sortData: SortOrder }) {
 
     return (
         <>
-            {sortedData.map((data: PdfMetadata) => (
-                <div
-                    key={data.id}
-                    className={`basis-full flex-row my-1 ${
-                        data.has_file_problems === 1
-                            ? "error"
-                            : duplicatIDRef.current.includes(data.id)
-                            ? "warning"
-                            : "even:bg-zinc-300 odd:bg-zinc-400"
-                    }`}
-                    onClick={() => handleVisibility(data.id)}
-                >
-                    <div className="flex gap-x-2 py-1 px-2 cursor-pointer">
-                        <div className="basis-25 truncate content-center">{data.title}</div>
-                        <div className="basis-20 truncate content-center">{data.filename}</div>
-                        <div className="basis-15 truncate content-center">{data.author}</div>
-                        <div className="basis-15 truncate content-center text-center">{data.created}</div>
-                        <div className="basis-7 truncate content-center text-center">
-                            {" "}
-                            {data.filesize && formatBytes(data.filesize)}
+            {sortedData
+                .filter((data) =>
+                    searchParams.get("search")
+                        ? data.title.toLowerCase().includes(searchParams.get("search")?.toString().toLowerCase() ?? "")
+                        : true
+                )
+                .map((data: PdfMetadata) => (
+                    <div
+                        key={data.id}
+                        className={`basis-full flex-row my-1 ${
+                            data.has_file_problems === 1
+                                ? "error"
+                                : duplicatIDRef.current.includes(data.id)
+                                ? "warning"
+                                : "even:bg-zinc-300 odd:bg-zinc-400"
+                        }`}
+                        onClick={() => handleVisibility(data.id)}
+                    >
+                        <div className="flex gap-x-2 py-1 px-2 cursor-pointer">
+                            <div className="basis-25 truncate content-center">{data.title}</div>
+                            <div className="basis-20 truncate content-center">{data.filename}</div>
+                            <div className="basis-15 truncate content-center">{data.author}</div>
+                            <div className="basis-15 truncate content-center text-center">{data.created}</div>
+                            <div className="basis-7 truncate content-center text-center">
+                                {" "}
+                                {data.filesize && formatBytes(data.filesize)}
+                            </div>
+                            <div className="basis-5 truncate content-center text-center">
+                                {data.has_metadata ? "Yes" : "No"}
+                            </div>
+                            <div className="basis-5 truncate content-center text-center">
+                                {data.has_file_problems ? "Yes" : "No"}
+                            </div>
+                            <div className="basis-10 flex justify-center ">
+                                <Button id={data.id} to_delete={data.to_delete} />
+                            </div>
                         </div>
-                        <div className="basis-5 truncate content-center text-center">
-                            {data.has_metadata ? "Yes" : "No"}
-                        </div>
-                        <div className="basis-5 truncate content-center text-center">
-                            {data.has_file_problems ? "Yes" : "No"}
-                        </div>
-                        <div className="basis-10 flex justify-center ">
-                            <Button id={data.id} to_delete={data.to_delete} />
+                        <div className={`${visibility[data.id] ? "" : "hidden"}`}>
+                            <div className="py-1 px-2 text-lg">
+                                <div className="basis6-12">
+                                    <b>Creator: </b>
+                                    {data.creator}
+                                </div>
+                                <div className="basis6-12">
+                                    <b>Producer: </b>
+                                    {data.producer}
+                                </div>
+                                <div className="basis6-12">
+                                    <b>Last Modified: </b>
+                                    {data.modified}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className={`${visibility[data.id] ? "" : "hidden"}`}>
-                        <div className="py-1 px-2 text-lg">
-                            <div className="basis6-12">
-                                <b>Creator: </b>
-                                {data.creator}
-                            </div>
-                            <div className="basis6-12">
-                                <b>Producer: </b>
-                                {data.producer}
-                            </div>
-                            <div className="basis6-12">
-                                <b>Last Modified: </b>
-                                {data.modified}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))}
+                ))}
         </>
     );
 }
